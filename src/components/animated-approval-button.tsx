@@ -21,7 +21,7 @@ export function AnimatedApprovalButton({ title, onApprove, onStart, disabled = f
       disabled={isDone || disabled}
       aria-label={`${isDone ? dashboardCopy.done : dashboardCopy.approve}: ${title}`}
       onClick={handleApprove}
-      className={`relative grid h-[35px] w-[88px] shrink-0 cursor-pointer place-items-center overflow-hidden rounded-full text-[13px] font-medium text-white focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-default xl:w-[94px] ${isDone ? "bg-[#16A34A] focus-visible:outline-[#16A34A]" : "bg-[#815BE8] hover:bg-[#7048D6] focus-visible:outline-[#8059E9]"}`}
+      className={`relative grid h-[35px] w-[88px] shrink-0 cursor-pointer place-items-center overflow-hidden rounded-full text-[13px] font-medium text-white focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-default xl:w-[94px] ${isDone ? "bg-[#16A34A] focus-visible:outline-[#16A34A]" : "bg-blue-500 hover:bg-blue-600 focus-visible:outline-blue-500"}`}
     >
       <span data-approval-label aria-hidden="true" className={`relative col-start-1 row-start-1 ${isDone ? "opacity-0" : "opacity-100"}`}>{dashboardCopy.approve}</span>
       <span data-done-label aria-hidden="true" className={`relative col-start-1 row-start-1 flex items-center gap-1.5 ${isDone ? "opacity-100" : "translate-y-1.5 opacity-0"}`}>

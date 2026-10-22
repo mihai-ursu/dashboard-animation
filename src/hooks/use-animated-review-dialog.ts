@@ -48,7 +48,7 @@ export function useAnimatedReviewDialog({ request, onClose, onApprove }: UseAnim
       opacity: 0,
       filter: "blur(4px)",
     });
-    gsap.set(backdrop, { backgroundColor: "rgba(25, 22, 53, 0)", backdropFilter: "blur(0px)" });
+    gsap.set(backdrop, { backgroundColor: "rgba(15, 23, 42, 0)", backdropFilter: "blur(0px)" });
     // Open after React has committed the selected request, before the first paint.
     dialog.showModal();
 
@@ -56,7 +56,7 @@ export function useAnimatedReviewDialog({ request, onClose, onApprove }: UseAnim
       .to(panel, { rotationX: 0, scale: 1, duration: reducedMotion ? 0 : openingDuration, ease: openingEase }, 0)
       .to(panel, { opacity: 1, filter: "blur(0px)", duration: reducedMotion ? 0.12 : 0.4, ease: "power3.out" }, 0)
       // Animate the blur itself so the background softens progressively.
-      .to(backdrop, { backgroundColor: "rgba(25, 22, 53, 0.18)", backdropFilter: "blur(4px)", duration: reducedMotion ? 0.12 : 0.4, ease: "power3.out" }, 0);
+      .to(backdrop, { backgroundColor: "rgba(15, 23, 42, 0.18)", backdropFilter: "blur(4px)", duration: reducedMotion ? 0.12 : 0.4, ease: "power3.out" }, 0);
 
     return () => {
       timelineRef.current?.kill();
@@ -92,7 +92,7 @@ export function useAnimatedReviewDialog({ request, onClose, onApprove }: UseAnim
           duration: reducedMotion ? 0.12 : 0.2,
           ease: (progress: number) => 0.5 * progress + 0.5 * progress * progress,
         }, 0)
-        .to(backdrop, { backgroundColor: "rgba(25, 22, 53, 0)", backdropFilter: "blur(0px)", duration: reducedMotion ? 0.12 : 0.4, ease: "power3.out" }, 0);
+        .to(backdrop, { backgroundColor: "rgba(15, 23, 42, 0)", backdropFilter: "blur(0px)", duration: reducedMotion ? 0.12 : 0.4, ease: "power3.out" }, 0);
     })();
   }
 
