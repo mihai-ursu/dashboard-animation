@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { initialRequests, visibleRequestLimit } from "@/data/decision-requests";
 import { useAnimatedCardLayout } from "@/hooks/use-animated-card-layout";
 import type { DashboardRequest } from "@/types/dashboard";
@@ -9,7 +9,6 @@ export function useAnimatedDecisionCard() {
   const [queue, setQueue] = useState({ count: initialRequests.length, requests: [...initialRequests] });
   const [showAll, setShowAll] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState<DashboardRequest | null>(null);
-  const dialogRef = useRef<HTMLDialogElement>(null);
   const headingId = "after-heading";
 
   function removeRequest(id: number) {
@@ -27,11 +26,10 @@ export function useAnimatedDecisionCard() {
 
   function reviewRequest(request: DashboardRequest) {
     setSelectedRequest(request);
-    dialogRef.current?.showModal();
   }
 
   function closeReview() {
-    dialogRef.current?.close();
+    setSelectedRequest(null);
   }
 
   function approveSelectedRequest() {
@@ -56,7 +54,6 @@ export function useAnimatedDecisionCard() {
     listRef: animations.listRef,
     isAnimating: animations.isAnimating,
     isToggling: animations.isToggling,
-    dialogRef,
     count: queue.count,
     showAll,
     selectedRequest,

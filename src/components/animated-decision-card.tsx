@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { AnimatedApprovalButton } from "@/components/animated-approval-button";
 import { AnimatedCount } from "@/components/animated-count";
+import { AnimatedReviewDialog } from "@/components/animated-review-dialog";
 import { useAnimatedDecisionCard } from "@/hooks/use-animated-decision-card";
 import { dashboardCopy, visibleRequestLimit } from "@/data/decision-requests";
 
@@ -11,7 +12,6 @@ export function AnimatedDecisionCard() {
     cardRef,
     contentRef,
     listRef,
-    dialogRef,
     count,
     showAll,
     selectedRequest,
@@ -86,15 +86,7 @@ export function AnimatedDecisionCard() {
           {count === 0 && <p role="status" className="px-3 py-14 text-center text-sm text-[#625C80]">{dashboardCopy.emptyMessage}</p>}
         </div>
       </div>
-      <dialog ref={dialogRef} aria-labelledby={`${headingId}-review`} className="fixed inset-0 m-auto w-[calc(100%-2rem)] max-w-md rounded-[24px] border border-[#EAE8F3] bg-white p-6 text-[#191635] shadow-xl backdrop:bg-[#191635]/25">
-        <h3 id={`${headingId}-review`} className="text-lg font-semibold">{selectedRequest?.title}</h3>
-        <p className="mt-2 text-xs text-[#9290AA]">{selectedRequest?.context}</p>
-        <p className="mt-4 text-sm leading-6 text-[#625C80]">{selectedRequest?.detail}</p>
-        <div className="mt-6 flex justify-end gap-3">
-          <button type="button" onClick={closeReview} className="cursor-pointer rounded-full border border-[#EAE7F3] px-4 py-2 text-sm hover:bg-[#F7F5FC] focus-visible:outline-2 focus-visible:outline-[#8059E9]">{dashboardCopy.close}</button>
-          <button type="button" onClick={approveSelectedRequest} className="cursor-pointer rounded-full bg-[#815BE8] px-4 py-2 text-sm text-white hover:bg-[#7048D6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8059E9]">{dashboardCopy.approveRequest}</button>
-        </div>
-      </dialog>
+      <AnimatedReviewDialog request={selectedRequest} headingId={headingId} onClose={closeReview} onApprove={approveSelectedRequest} />
     </section>
   );
 }
