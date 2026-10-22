@@ -1,5 +1,12 @@
 import type { DashboardRequest } from "@/types/dashboard";
 
+// Static imports give precompressed thumbnails content-hashed, cacheable URLs.
+import apartmentsAvatar from "@/assets/avatars/apartments.webp";
+import houseAvatar from "@/assets/avatars/house.webp";
+import ownerAvatar from "@/assets/avatars/owner.webp";
+import propertyAvatar from "@/assets/avatars/property.webp";
+import residentAvatar from "@/assets/avatars/resident.webp";
+
 export const visibleRequestLimit = 5;
 
 export const dashboardCopy = {
@@ -26,7 +33,7 @@ export const initialRequests: DashboardRequest[] = [
     context: "Maintenance agent · 38 Oak St, Unit 3",
     status: "Above spending limit",
     time: "14 min",
-    image: "/avatars/house.jpg",
+    image: houseAvatar,
     needsReview: true,
     detail: "The kitchen outlets need a repair. The electrician quoted $480, which exceeds the property's automatic approval limit of $350.",
   },
@@ -36,7 +43,7 @@ export const initialRequests: DashboardRequest[] = [
     context: "Leasing agent · 640 Park Ave, Unit 2B",
     status: "Within guidelines",
     time: "5 min",
-    image: "/avatars/resident.jpg",
+    image: residentAvatar,
     needsReview: false,
     detail: "Confirm Emma's viewing for Friday at 2 pm and send the property access instructions.",
   },
@@ -46,7 +53,7 @@ export const initialRequests: DashboardRequest[] = [
     context: "Owner agent · 3 properties, 18 units",
     status: "Within guidelines",
     time: "28 min",
-    image: "/avatars/owner.jpg",
+    image: ownerAvatar,
     needsReview: false,
     detail: "Send the monthly owner summary covering rental income, maintenance expenses, and occupancy across all three properties.",
   },
@@ -56,7 +63,7 @@ export const initialRequests: DashboardRequest[] = [
     context: "Leasing agent · Willow Court, Unit 8A",
     status: "Renewal decision",
     time: "1 h",
-    image: "/avatars/apartments.jpg",
+    image: apartmentsAvatar,
     needsReview: true,
     detail: "The current resident requested a 12-month renewal. Review the proposed renewal at the existing monthly rent.",
   },
@@ -66,7 +73,7 @@ export const initialRequests: DashboardRequest[] = [
     context: "Maintenance agent · 52 Birch Rd, Unit 5",
     status: "Entry notice",
     time: "2 h",
-    image: "/avatars/property.jpg",
+    image: propertyAvatar,
     needsReview: true,
     detail: "Review the notice for the upcoming routine property inspection before it is delivered to the resident.",
   },
@@ -76,7 +83,7 @@ export const initialRequests: DashboardRequest[] = [
     context: "Maintenance agent · Willow Court",
     status: "Within guidelines",
     time: "3 h",
-    image: "/avatars/apartments.jpg",
+    image: apartmentsAvatar,
     needsReview: false,
     detail: "Confirm the scheduled landscaping visit for the shared courtyard on Monday morning.",
   },
@@ -86,7 +93,7 @@ export const initialRequests: DashboardRequest[] = [
     context: "Leasing agent · 38 Oak St, Unit 1",
     status: "Within guidelines",
     time: "4 h",
-    image: "/avatars/house.jpg",
+    image: houseAvatar,
     needsReview: false,
     detail: "Send the new resident their welcome message with move-in details and the property contact information.",
   },

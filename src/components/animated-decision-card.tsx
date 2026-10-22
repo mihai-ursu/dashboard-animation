@@ -59,7 +59,16 @@ export function AnimatedDecisionCard() {
           <ul ref={listRef} id={`${headingId}-requests`} className="space-y-0.5">
             {visibleRequests.map((request) => (
               <li key={request.id} data-request-id={request.id} className={`grid grid-cols-[40px_minmax(0,1fr)] items-center gap-x-3 gap-y-2 rounded-[20px] px-2 py-2 sm:grid-cols-[44px_minmax(0,1fr)_auto] sm:gap-x-3.5 sm:px-3 sm:py-[7px] ${request.id === 2 ? "bg-blue-50" : ""}`}>
-                <Image src={request.image} alt="" width={44} height={44} className="size-10 rounded-[15px] object-cover sm:size-11" />
+                <Image
+                  src={request.image}
+                  alt=""
+                  width={44}
+                  height={44}
+                  loading="eager"
+                  fetchPriority="high"
+                  unoptimized
+                  className="size-10 rounded-[15px] object-cover sm:size-11"
+                />
                 <div className="min-w-0">
                   <p className="text-[13px] leading-5 font-medium text-slate-900 xl:text-sm">{request.title}</p>
                   <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs leading-[18px]">
