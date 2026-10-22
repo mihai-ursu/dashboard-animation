@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { initialRequests } from "@/data/decision-requests";
+import { initialRequests, visibleRequestLimit } from "@/data/decision-requests";
 import { useAnimatedCardLayout } from "@/hooks/use-animated-card-layout";
 import type { DashboardRequest } from "@/types/dashboard";
 
@@ -21,6 +21,7 @@ export function useAnimatedDecisionCard() {
 
   const animations = useAnimatedCardLayout({
     requests: queue.requests,
+    showAll,
     onRemove: removeRequest,
   });
 
@@ -39,12 +40,13 @@ export function useAnimatedDecisionCard() {
   }
 
   function toggleShowAll() {
-    setShowAll((current) => !current);
+    animations.toggleShowAll(() => setShowAll((current) => !current));
   }
 
-  const visibleRequests = (showAll ? queue.requests : queue.requests.slice(0, 5)).map((request) => ({
+  const visibleRequests = (showAll ? queue.requests : queue.requests.slice(0, visibleRequestLimit)).map((request) => ({
     ...request,
     onReview: () => reviewRequest(request),
+    onStart: () => animations.startApproval(request.id),
     onApprove: () => animations.approveRequest(request.id),
   }));
 
@@ -53,7 +55,7 @@ export function useAnimatedDecisionCard() {
     contentRef: animations.contentRef,
     listRef: animations.listRef,
     isAnimating: animations.isAnimating,
-    startApproval: animations.startApproval,
+    isToggling: animations.isToggling,
     dialogRef,
     count: queue.count,
     showAll,

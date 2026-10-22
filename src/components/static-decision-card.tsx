@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useStaticDecisionCard } from "@/hooks/use-static-decision-card";
-import { dashboardCopy } from "@/data/decision-requests";
+import { dashboardCopy, visibleRequestLimit } from "@/data/decision-requests";
 
 export function StaticDecisionCard() {
   const {
@@ -36,12 +36,14 @@ export function StaticDecisionCard() {
                 {dashboardCopy.description}
               </p>
             </div>
-            <button type="button" onClick={toggleShowAll} aria-expanded={showAll} className="flex shrink-0 cursor-pointer items-center gap-1 rounded-lg py-2 text-xs text-[#5032BB] hover:text-[#8059E9] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8059E9]">
-              {showAll ? dashboardCopy.showLess : `${dashboardCopy.viewAll} ${count}`}
-              <svg aria-hidden="true" viewBox="0 0 16 16" className={`size-3  ${showAll ? "rotate-90" : ""}`} fill="none" stroke="currentColor" strokeWidth="1.2">
-                <path d="m6 3 5 5-5 5" />
-              </svg>
-            </button>
+            {count > visibleRequestLimit && (
+              <button type="button" onClick={toggleShowAll} aria-expanded={showAll} className="flex shrink-0 cursor-pointer items-center gap-1 rounded-lg py-2 text-xs text-[#5032BB] hover:text-[#8059E9] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8059E9]">
+                {showAll ? dashboardCopy.showLess : `${dashboardCopy.viewAll} ${count}`}
+                <svg aria-hidden="true" viewBox="0 0 16 16" className={`size-3  ${showAll ? "rotate-90" : ""}`} fill="none" stroke="currentColor" strokeWidth="1.2">
+                  <path d="m6 3 5 5-5 5" />
+                </svg>
+              </button>
+            )}
           </header>
           <ul className="space-y-0.5">
             {visibleRequests.map((request) => (

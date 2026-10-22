@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { initialRequests } from "@/data/decision-requests";
+import { initialRequests, visibleRequestLimit } from "@/data/decision-requests";
 import type { DashboardRequest } from "@/types/dashboard";
 
 export function useStaticDecisionCard() {
@@ -36,7 +36,7 @@ export function useStaticDecisionCard() {
     setShowAll((current) => !current);
   }
 
-  const visibleRequests = (showAll ? queue.requests : queue.requests.slice(0, 5)).map((request) => ({
+  const visibleRequests = (showAll ? queue.requests : queue.requests.slice(0, visibleRequestLimit)).map((request) => ({
     ...request,
     onReview: () => reviewRequest(request),
     onApprove: () => approveRequest(request.id),

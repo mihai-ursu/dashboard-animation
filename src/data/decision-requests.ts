@@ -1,5 +1,7 @@
 import type { DashboardRequest } from "@/types/dashboard";
 
+export const visibleRequestLimit = 5;
+
 export const dashboardCopy = {
   comparisonTitle: "Dashboard before and after comparison",
   before: "Before",
@@ -77,5 +79,15 @@ export const initialRequests: DashboardRequest[] = [
     image: "/avatars/apartments.jpg",
     needsReview: false,
     detail: "Confirm the scheduled landscaping visit for the shared courtyard on Monday morning.",
+  },
+  {
+    id: 7,
+    title: "Send a welcome message to the new resident",
+    context: "Leasing agent · 38 Oak St, Unit 1",
+    status: "Within guidelines",
+    time: "4 h",
+    image: "/avatars/house.jpg",
+    needsReview: false,
+    detail: "Send the new resident their welcome message with move-in details and the property contact information.",
   },
 ];

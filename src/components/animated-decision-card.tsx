@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { AnimatedApprovalButton } from "@/components/animated-approval-button";
+import { AnimatedCount } from "@/components/animated-count";
 import { useAnimatedDecisionCard } from "@/hooks/use-animated-decision-card";
-import { dashboardCopy } from "@/data/decision-requests";
+import { dashboardCopy, visibleRequestLimit } from "@/data/decision-requests";
 
 export function AnimatedDecisionCard() {
   const {
@@ -15,9 +16,9 @@ export function AnimatedDecisionCard() {
     showAll,
     selectedRequest,
     isAnimating,
+    isToggling,
     headingId,
     visibleRequests,
-    startApproval,
     closeReview,
     approveSelectedRequest,
     toggleShowAll,
@@ -35,21 +36,27 @@ export function AnimatedDecisionCard() {
               <h2 id={headingId} className="flex items-center gap-2 text-[15px] leading-5 font-semibold tracking-[-0.2px] text-[#191635]">
                 {dashboardCopy.heading}
                 <span aria-label={`${count} ${dashboardCopy.pendingRequests}`} aria-live="polite" className="flex h-[21px] min-w-[23px] items-center justify-center rounded-full bg-[#F0EAFF] px-1.5 text-[13px] font-normal text-[#6544D8]">
-                  {count}
+                  <span className="sr-only">{count}</span>
+                  <AnimatedCount value={count} />
                 </span>
               </h2>
               <p className="mt-0.5 text-xs leading-[18px] text-[#9290AA]">
                 {dashboardCopy.description}
               </p>
             </div>
-            <button type="button" disabled={isAnimating} onClick={toggleShowAll} aria-expanded={showAll} className="flex shrink-0 cursor-pointer items-center gap-1 rounded-lg py-2 text-xs text-[#5032BB] transition-colors hover:text-[#8059E9] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8059E9] disabled:cursor-default">
-              {showAll ? dashboardCopy.showLess : `${dashboardCopy.viewAll} ${count}`}
-              <svg aria-hidden="true" viewBox="0 0 16 16" className={`size-3 transition-transform ${showAll ? "rotate-90" : ""}`} fill="none" stroke="currentColor" strokeWidth="1.2">
-                <path d="m6 3 5 5-5 5" />
-              </svg>
-            </button>
+            {count > visibleRequestLimit && (
+              <button type="button" disabled={isAnimating} onClick={toggleShowAll} aria-label={showAll ? dashboardCopy.showLess : `${dashboardCopy.viewAll} ${count}`} aria-expanded={showAll} aria-controls={`${headingId}-requests`} className="grid shrink-0 cursor-pointer grid-cols-[1fr_12px] items-center gap-x-1 rounded-lg py-2 text-xs text-[#5032BB] transition-colors hover:text-[#8059E9] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8059E9] disabled:cursor-default">
+                <span aria-hidden="true" className={`col-start-1 row-start-1 flex items-center gap-1 transition-[opacity,transform] duration-200 motion-reduce:transition-none ${showAll ? "-translate-y-1 opacity-0" : "translate-y-0 opacity-100"}`}>
+                  {dashboardCopy.viewAll} <AnimatedCount value={count} />
+                </span>
+                <span aria-hidden="true" className={`col-start-1 row-start-1 transition-[opacity,transform] duration-200 motion-reduce:transition-none ${showAll ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0"}`}>{dashboardCopy.showLess}</span>
+                <svg aria-hidden="true" viewBox="0 0 16 16" className={`col-start-2 row-start-1 size-3 transition-transform duration-500 motion-reduce:transition-none ${showAll ? "rotate-90" : ""}`} fill="none" stroke="currentColor" strokeWidth="1.2">
+                  <path d="m6 3 5 5-5 5" />
+                </svg>
+              </button>
+            )}
           </header>
-          <ul ref={listRef} className="space-y-0.5">
+          <ul ref={listRef} id={`${headingId}-requests`} className="space-y-0.5">
             {visibleRequests.map((request) => (
               <li key={request.id} data-request-id={request.id} className={`grid grid-cols-[40px_minmax(0,1fr)] items-center gap-x-3 gap-y-2 rounded-[20px] px-2 py-2 sm:grid-cols-[44px_minmax(0,1fr)_auto] sm:gap-x-3.5 sm:px-3 sm:py-[7px] ${request.id === 2 ? "bg-[#F7F5FC]" : ""}`}>
                 <Image src={request.image} alt="" width={44} height={44} className="size-10 rounded-[15px] object-cover sm:size-11" />
@@ -70,7 +77,7 @@ export function AnimatedDecisionCard() {
                       {dashboardCopy.review}
                     </button>
                   ) : (
-                    <AnimatedApprovalButton title={request.title} disabled={isAnimating} onStart={startApproval} onApprove={request.onApprove} />
+                    <AnimatedApprovalButton title={request.title} disabled={isToggling} onStart={request.onStart} onApprove={request.onApprove} />
                   )}
                 </div>
               </li>
